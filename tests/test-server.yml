@@ -1,0 +1,25 @@
+---
+- hosts: localhost
+  remote_user: root
+  vars:
+    - sensu_services:
+      - sensu-server
+      - sensu-api
+      - sensu-client
+    - sensu_configs:
+      - client
+      - rabbitmq
+      - api
+      - redis
+    - sensu_configs:
+      - client
+      - rabbitmq
+      - api
+      - redis
+    - sensu_checks:
+      - name: check_cron
+        command: "{{ sensu_plugins_directory }}/check-procs.rb -d cron -C 1"
+      - name: check_ntp
+        command: "{{ sensu_plugins_directory }}/check-procs.rb -d ntp -C 1"
+  roles:
+    - sensu
