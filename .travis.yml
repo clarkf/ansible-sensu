@@ -3,8 +3,8 @@ language: python
 python: "2.7"
 
 env:
-  - SITE=server.yml
-  - SITE=client.yml
+  - SITE=test-server.yml
+  - SITE=test-client.yml
 
 before_install:
   - sudo apt-get update -qq
