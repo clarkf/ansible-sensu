@@ -29,6 +29,15 @@ sensu_rabbitmq:
   password: sensu_password
 ```
 
+If you'd like the client to identify itself as something other than its hostname
+(not fully qualified), override `sensu_client_name`.  If you want custom
+identifiers, it's recommended that you do this in your inventory file:
+
+```ini
+[webservers]
+crimson.mydomain.local sensu_client_name=web01
+```
+
 ### Advanced: Copying plugins
 
 If you'd like this role to auto-magically copy over your plugins,
@@ -239,8 +248,6 @@ MIT.  See `LICENSE` for details.
 
 ## TODO
 
-- Add the ability to override the name in `client.json` &ndash;
-  Currently you're locked in to the shortened hostname
 - Support for SSL/TLS RabbitMQ communication
 - Support for RedHat-family operating systems (well... at least
   CentOS6).
