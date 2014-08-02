@@ -22,4 +22,4 @@
       - name: check_ntp
         command: "{{ sensu_plugins_directory }}/check-procs.rb -d ntp -C 1"
   roles:
-    - sensu
+    - ansible-sensu
