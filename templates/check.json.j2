@@ -1,0 +1,13 @@
+{
+    "checks": {
+        "{{ item.name }}": {
+            {% if item.type is defined %}
+            "type": "{{ item.type }}",
+            {% endif %}
+            "command": {{ item.command | mandatory | to_nice_json }},
+            "subscribers": {{ item.get('subscribers', sensu_default_subscribers) | to_json }},
+            "interval": {{ item.get('interval', sensu_default_interval) | int | to_json }},
+            "handlers": {{ item.get('handlers', sensu_default_handlers) | to_json }}
+        }
+    }
+}

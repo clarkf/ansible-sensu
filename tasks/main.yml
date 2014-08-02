@@ -1,0 +1,61 @@
+---
+- name: Install Sensu apt Key
+  apt_key: url={{ sensu_apt.key_url }}
+           state=present
+  tags: sensu
+
+- name: Install Sensu apt Repository
+  apt_repository: repo='{{sensu_apt.repository}}'
+                  state=present
+  tags: sensu
+
+- name: Install Sensu
+  apt: pkg={{ sensu_apt.package }}
+       state=present
+       update_cache=yes
+  tags: sensu
+
+- name: Configure Sensu
+  template: src={{ item }}.json.j2
+            dest={{ sensu_confs_directory}}/{{ item }}.json
+            owner=sensu
+            group=sensu
+            mode=0755
+  with_items: sensu_configs
+  notify: restart sensu
+  tags: sensu
+
+- name: Server | Add check definitions
+  template: src=check.json.j2
+            dest={{ sensu_confs_directory}}/{{ item.name }}.json
+            mode=0644
+            owner=sensu
+            group=sensu
+  with_items: sensu_checks | default([])
+  notify: restart sensu
+  tags: sensu
+
+- name: Server | Add extensions
+  copy: src={{ item }}
+        dest={{ sensu_extensions_directory }}/
+        mode=0755
+        owner=sensu
+        group=sensu
+  with_items: sensu_extensions | default([])
+  notify: restart sensu
+  tags: sensu
+
+
+- name: Client | Add plugins
+  copy: src={{ item }}
+        dest={{ sensu_plugins_directory }}/
+        owner=sensu
+        group=sensu
+        mode=0755
+  with_items: sensu_plugins | default([])
+  tags: sensu
+
+- name: Start sensu services
+  service: name={{ item }} state=running enabled=yes
+  with_items: sensu_services
+  tags: sensu
