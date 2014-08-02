@@ -1,7 +1,7 @@
 {
   "client": {
     "name": "{{ sensu_client_name | default(ansible_hostname) }}",
-    "address": "{{ ansible_eth0['ipv4']['address'] }}",
+    "address": "{{ sensu_client_ip | default(ansible_eth0['ipv4']['address']) }}",
     "subscriptions": {{ ['common'] | union(group_names) | list | to_json }}
   }
 }

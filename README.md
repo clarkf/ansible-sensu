@@ -1,5 +1,7 @@
 # Ansible Role: Sensu
 
+[![Build Status](http://img.shields.io/travis/clarkf/ansible-sensu.svg?style=flat)](https://travis-ci.org/clarkf/ansible-sensu)
+
 Installs Sensu (either as a server or as a client) on servers.
 
 At present, this role does __not__ support RabbitMQ TLS/SSL
@@ -37,6 +39,9 @@ identifiers, it's recommended that you do this in your inventory file:
 [webservers]
 crimson.mydomain.local sensu_client_name=web01
 ```
+
+If you'd like to customize the IP address reported by the client, you
+can similarly override `sensu_client_ip`.
 
 ### Advanced: Copying plugins
 
