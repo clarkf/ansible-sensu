@@ -13,6 +13,11 @@ sensu_plugins_directory: /etc/sensu/plugins
 sensu_confs_directory: /etc/sensu/conf.d
 sensu_extensions_directory: /etc/sensu/extensions
 
+# Sensu user/group settings - The user and group that sensu runs as.  It's
+# important that all configuration files are readble by this group.
+sensu_user: sensu
+sensu_group: sensu
+
 
 # The services that should be started by the role.  Override this for
 # master hosts to start the api and server daemons.

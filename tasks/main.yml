@@ -18,8 +18,8 @@
 - name: Configure Sensu
   template: src={{ item }}.json.j2
             dest={{ sensu_confs_directory}}/{{ item }}.json
-            owner=sensu
-            group=sensu
+            owner={{ sensu_user }}
+            group={{ sensu_group }}
             mode=0755
   with_items: sensu_configs
   notify: restart sensu
@@ -29,8 +29,8 @@
   template: src=check.json.j2
             dest={{ sensu_confs_directory}}/{{ item.name }}.json
             mode=0644
-            owner=sensu
-            group=sensu
+            owner={{ sensu_user }}
+            group={{ sensu_group }}
   with_items: sensu_checks | default([])
   notify: restart sensu
   tags: sensu
@@ -39,8 +39,8 @@
   copy: src={{ item }}
         dest={{ sensu_extensions_directory }}/
         mode=0755
-        owner=sensu
-        group=sensu
+        owner={{ sensu_user }}
+        group={{ sensu_group }}
   with_items: sensu_extensions | default([])
   notify: restart sensu
   tags: sensu
@@ -49,8 +49,8 @@
 - name: Client | Add plugins
   copy: src={{ item }}
         dest={{ sensu_plugins_directory }}/
-        owner=sensu
-        group=sensu
+        owner={{ sensu_user }}
+        group={{ sensu_group }}
         mode=0755
   with_items: sensu_plugins | default([])
   tags: sensu
